@@ -42,6 +42,5 @@ for line in preprocess("data/neg.txt"):
     data["is_positive"].append(False)
 
 
-
 data["text"], data["is_positive"] = shuffle(np.array(data["text"]), np.array(data["is_positive"]))
 print(data)
