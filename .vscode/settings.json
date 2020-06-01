@@ -16,8 +16,11 @@
     "lemmatization",
     "lemmatize",
     "lemmatized",
+    "lstm",
     "nltk",
     "reduced",
+    "relu",
+    "sklearn",
     "tokens",
     "tokens reduced lemmatized"
   ]
