@@ -10,5 +10,15 @@
     "-NoExit",
     "-Command",
     "${workspaceFolder}/scripts/activate-env.ps1"
+  ],
+  "cSpell.words": [
+    "Lemmatizer",
+    "lemmatization",
+    "lemmatize",
+    "lemmatized",
+    "nltk",
+    "reduced",
+    "tokens",
+    "tokens reduced lemmatized"
   ]
 }
