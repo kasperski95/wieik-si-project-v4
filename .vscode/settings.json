@@ -22,6 +22,8 @@
     "relu",
     "sklearn",
     "tokens",
-    "tokens reduced lemmatized"
+    "tokens reduced lemmatized",
+    "wandb",
+    "wieik"
   ]
 }
