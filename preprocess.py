@@ -10,7 +10,9 @@ from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 from keras.engine.sequential import Sequential
 from keras.layers.recurrent import LSTM
-from keras.layers.core import Dense, Dropout
+from keras.layers.core import Dense, Dropout, Flatten
+import os
+import keras
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -38,7 +40,7 @@ def preprocess(filepath):
     return result
 
 def convert_words_to_vectors(word2vec, words):
-    results = [[0 for col in range(MAX_WORDS)] for row in range(WORD_VEC_DIMENSIONS)]
+    results = [[0 for meaning in range(WORD_VEC_DIMENSIONS)] for word in range(MAX_WORDS)]
     i = 0
     for word in words:
         if i >= MAX_WORDS: break
@@ -49,6 +51,30 @@ def convert_words_to_vectors(word2vec, words):
             results[i] = word2vec[word]
             i += 1
     return results
+
+def create_or_load_model(name):
+    model = None
+    
+    if not os.path.exists("models"):
+        os.makedirs("models")
+
+    model_filepath = f"models/{name}.h5"
+    if os.path.exists(model_filepath):
+        print(f"[INFO] loading model from {model_filepath}")
+        model = keras.models.load_model(model_filepath)
+    else:
+        print(f"[INFO] creating new model")
+        model = Sequential()
+        model.add(LSTM(MAX_WORDS, input_shape=(MAX_WORDS, WORD_VEC_DIMENSIONS), dropout = 0.3, recurrent_dropout = 0.3))
+        model.add(Dense(1, activation = 'sigmoid'))
+        model.compile(
+            loss='binary_crossentropy',
+            optimizer='Adam',
+            metrics=['accuracy']
+        )
+    
+    print(model.summary())
+    return model
 
 
 data = {"text": [], "is_positive": []}
@@ -69,23 +95,20 @@ data["vectors"] = []
 for line in data["text"]:
     data["vectors"].append(convert_words_to_vectors(word2vec, line))
 
-df = pd.DataFrame(data)
-
 # -------------------------------------------------
 
 X_train, X_test, y_train, y_test = train_test_split(data["vectors"], data["is_positive"], test_size=0.33, random_state=42)
+X_train = np.array(X_train)
 
-print(pd.DataFrame(X_train))
-print(np.array(X_train).shape)
+model = create_or_load_model("model")
 
 
-# model = Sequential()
-# model.add(LSTM(256, dropout = 0.3, recurrent_dropout = 0.3))
-# model.add(Dense(256, activation = 'relu'))
-# model.add(Dropout(0.3))
-# model.add(Dense(5, activation = 'softmax'))
-# model.compile(
-#     loss='categorical_crossentropy',
-#     optimizer='Adam',
-#     metrics=['accuracy']
-# )
+model.fit(X_train, y_train, epochs=1000, verbose=1)
+
+
+
+
+
+
+
+
