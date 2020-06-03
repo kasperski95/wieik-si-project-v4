@@ -13,6 +13,9 @@
   ],
   "cSpell.words": [
     "Lemmatizer",
+    "ftrl",
+    "hyperparameters",
+    "kerastuner",
     "lemmatization",
     "lemmatize",
     "lemmatized",

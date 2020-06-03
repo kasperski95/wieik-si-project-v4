@@ -1,4 +1,6 @@
 env/
-__pycache__/
 wandb/
+models/
+checkpoints/
+__pycache__/
 **/GoogleNews-vectors-negative300*
