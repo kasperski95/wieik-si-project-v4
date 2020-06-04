@@ -27,11 +27,22 @@ class Preprocessor:
 
         return results
 
-    def preprocess_line(self, line):
+    def preprocess_line(self, line, verbose=False):
+        if verbose:
+            print(f"RAW: {line}")
+
         tokens = self._tokenizer.tokenize(line)
+        if verbose:
+            print(f"TOKENS: {tokens}")
+
         tokens_reduced = [w for w in tokens if not w in self._stop_words]
+        if verbose:
+            print(f"TOKENS_REDUCED: {tokens_reduced}")
+
         # tokens_reduced_stemmed = [stemmer.stem(w) for w in tokens_reduced ]
         tokens_reduced_lemmatized = [self._lemmatizer.lemmatize(w) for w in tokens_reduced]
+        if verbose:
+            print(f"TOKENS_REDUCED_LEMMATIZED: {tokens_reduced_lemmatized}")
 
         for token in tokens_reduced_lemmatized:
             self._vocabulary.add(token)
