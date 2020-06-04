@@ -31,7 +31,11 @@ class Preprocessor:
         if verbose:
             print(f"RAW: {line}")
 
-        tokens = self._tokenizer.tokenize(line)
+        lowercase = line.lower()
+        if verbose:
+            print(f"LOWERCASE: {lowercase}")
+
+        tokens = self._tokenizer.tokenize(lowercase)
         if verbose:
             print(f"TOKENS: {tokens}")
 
