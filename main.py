@@ -62,7 +62,7 @@ def create_model(hp):
 
 data = {"text": [], "is_positive": []}
 
-for line in Preprocessor("data/pos.txt").run():
+for line in Preprocessor("data/neg.txt").run():
     data["text"].append(line)
     data["is_positive"].append(0)
 
