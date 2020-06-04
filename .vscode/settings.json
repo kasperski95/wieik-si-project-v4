@@ -21,6 +21,7 @@
     "lemmatized",
     "lstm",
     "nltk",
+    "pyplot",
     "reduced",
     "relu",
     "sklearn",

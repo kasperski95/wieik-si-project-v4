@@ -29,13 +29,17 @@ parser.add_argument("--search-hyperparameters", metavar="False", type=bool, requ
 def load_data(word2vec_limit):
     data = {"text": [], "is_positive": []}
 
-    for line in Preprocessor().preprocess_file("data/neg.txt"):
+    preprocessor = Preprocessor()
+
+    for line in preprocessor.preprocess_file("data/neg.txt"):
         data["text"].append(line)
         data["is_positive"].append(0)
 
-    for line in Preprocessor().preprocess_file("data/pos.txt"):
+    for line in preprocessor.preprocess_file("data/pos.txt"):
         data["text"].append(line)
         data["is_positive"].append(1)
+
+    preprocessor.visualize()
 
     data["text"], data["is_positive"] = shuffle(np.array(data["text"]), np.array(data["is_positive"]))
     data["vectors"] = Word2Vec("data/GoogleNews-vectors-negative300.bin", word2vec_limit, MAX_WORDS, WORD_VEC_DIMENSIONS).convert(

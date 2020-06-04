@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.regexp import RegexpTokenizer
+from wordcloud import WordCloud
 
 
 class Preprocessor:
@@ -14,6 +16,7 @@ class Preprocessor:
         self._stop_words = set(stopwords.words("english"))
         # self._stemmer = nltk.stem.SnowballStemmer("english")
         self._lemmatizer = nltk.wordnet.WordNetLemmatizer()
+        self._vocabulary = set()
 
     def preprocess_file(self, filepath):
         results = []
@@ -29,4 +32,16 @@ class Preprocessor:
         tokens_reduced = [w for w in tokens if not w in self._stop_words]
         # tokens_reduced_stemmed = [stemmer.stem(w) for w in tokens_reduced ]
         tokens_reduced_lemmatized = [self._lemmatizer.lemmatize(w) for w in tokens_reduced]
+
+        for token in tokens_reduced_lemmatized:
+            self._vocabulary.add(token)
+
         return tokens_reduced_lemmatized
+
+    def visualize(self):
+        frequency_dist = nltk.FreqDist(self._vocabulary)
+        for i in range(1, 6):
+            wordcloud = WordCloud(width=1366, height=720, background_color="white").generate_from_frequencies(frequency_dist)
+            plt.imshow(wordcloud)
+            plt.axis("off")
+            plt.savefig(f"wordcloud-{i}.png", dpi=300)
