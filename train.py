@@ -29,11 +29,11 @@ parser.add_argument("--search-hyperparameters", metavar="False", type=bool, requ
 def load_data(word2vec_limit):
     data = {"text": [], "is_positive": []}
 
-    for line in Preprocessor("data/neg.txt").run():
+    for line in Preprocessor().preprocess_file("data/neg.txt"):
         data["text"].append(line)
         data["is_positive"].append(0)
 
-    for line in Preprocessor("data/pos.txt").run():
+    for line in Preprocessor().preprocess_file("data/pos.txt"):
         data["text"].append(line)
         data["is_positive"].append(1)
 
