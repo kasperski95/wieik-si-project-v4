@@ -31,11 +31,7 @@ class Preprocessor:
         if verbose:
             print(f"RAW: {line}")
 
-        lowercase = line.lower()
-        if verbose:
-            print(f"LOWERCASE: {lowercase}")
-
-        tokens = self._tokenizer.tokenize(lowercase)
+        tokens = self._tokenizer.tokenize(line)
         if verbose:
             print(f"TOKENS: {tokens}")
 
@@ -48,7 +44,11 @@ class Preprocessor:
         if verbose:
             print(f"TOKENS_REDUCED_LEMMATIZED: {tokens_reduced_lemmatized}")
 
-        for token in tokens_reduced_lemmatized:
+        tokens_reduced_lemmatized_lowercased = [t.lower() for t in tokens_reduced_lemmatized]
+        if verbose:
+            print(f"TOKENS_REDUCED_LEMMATIZED_LOWERCASED: {tokens_reduced_lemmatized_lowercased}")
+
+        for token in tokens_reduced_lemmatized_lowercased:
             self._vocabulary.add(token)
 
         return tokens_reduced_lemmatized
