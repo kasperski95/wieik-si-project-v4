@@ -28,6 +28,7 @@
     "tokens",
     "tokens reduced lemmatized",
     "wandb",
-    "wieik"
+    "wieik",
+    "wordcloud"
   ]
 }
